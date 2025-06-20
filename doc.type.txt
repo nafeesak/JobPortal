@@ -1,3 +1,8 @@
+Deployment Link: https://easily-deploy.onrender.com/
+https://pieces.app/collections
+https://restfulapi.net/resource-naming/
+
+
 Goal 
 Develop a job portal website that allows recruiter to post and manage job listing and provides 
 a user-friendly platform for job seeker fins and apply for suitable roles
