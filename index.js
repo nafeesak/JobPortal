@@ -4,7 +4,7 @@ import ejsLayouts from 'express-ejs-layouts';
 import session from 'express-session';
 import {auth} from './src/middleware/auth.middleware.js';
 import UserController from './src/controllers/user.controller.js';
-
+import { uploadFile } from './src/middleware/file-upload.middleware.js';
 import JobsController from './src/controllers/jobs.controller.js';
 import cookieParser from 'cookie-parser';
 import { setLastVisit } from './src/middleware/lastVisit.middleware.js';
@@ -55,6 +55,9 @@ app.get('/postjob',jobsController.getAddJob);
 // app.put('/jobs/:id',userController.getLogin);
 // app.delete('/jobs/:id',userController.getLogin);
 //Error page or any other routes
+
+app.post('/job', auth, uploadFile.single('logo'),
+ jobsController.postAddJob);
 app.use((req,res)=>{
     res.render('404');
 });

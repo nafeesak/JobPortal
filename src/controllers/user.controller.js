@@ -10,6 +10,7 @@ export default class UserController{
     postRegister(req,res){
         const {name,email,password}=req.body;
         UserModel.add(name,email,password);
+        req.session.userName=name;
         res.render('user-login',{errorMessage:null});
     }
     postLogin(req,res){
@@ -20,6 +21,7 @@ export default class UserController{
             errorMessage:"Invalid Credentials"
         })
        }
+       console.log(req.session.userName)
        req.session.user=email;
            var jobs =JobModel.getAll();
           return  res.render('list-all-jobs', { jobs,user:req.session.user });

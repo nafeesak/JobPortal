@@ -13,13 +13,33 @@ class JobsController {
     });
   }
 
-  postAddProduct(req, res, next) {
-    const {name,desc,price}=req.body;
+  postAddJob(req, res, next) {
+    const {  
+        job_category,
+        job_designation,
+        job_location,
+        company_name,
+        salary,
+        apply_by,
+        skills_required,
+        number_of_openings,
+        job_posted,
+        applicants}=req.body;
    // console.log(req.file.filename);
     const imageUrl='images/'+req.file.filename; 
-    ProductModel.add(name,desc,price,imageUrl);
-    var products = ProductModel.getAll();
-    res.render('index', { products,user:req.session.user });
+    JobModel.add( job_category,
+        job_designation,
+        job_location,
+        company_name,
+        salary,
+        apply_by,
+        skills_required,
+        number_of_openings,
+        job_posted,
+        applicants,imageUrl);
+    var jobs = JobModel.getAll();
+    console.log(req.session.user)
+    res.render('list-all-jobs', { products,user:req.session.user });
   }
 
 //   getUpdatedProductView(req,res,next){

@@ -1,0 +1,96 @@
+body {
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #f8fafc; /* Light gray background */
+}
+
+/* Custom styles for pagination active state as Tailwind doesn't have it directly */
+.pagination .page-item.active .page-link {
+    background-color: #3b82f6; /* Blue-500 */
+    border-color: #3b82f6;
+    color: white;
+    z-index: 10;
+}
+
+.pagination .page-link {
+    color: #3b82f6; /* Blue-500 */
+}
+
+.pagination .page-link:hover {
+    background-color: #eff6ff; /* Blue-50 */
+}
+
+/* Hide default radio/checkbox and style custom ones */
+.filter-option input[type="radio"],
+.filter-option input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid #d1d5db; /* Gray-300 */
+    border-radius: 0.25rem; /* Rounded corners */
+    position: relative;
+    cursor: pointer;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+.filter-option input[type="radio"] {
+    border-radius: 50%; /* Circle for radio buttons */
+}
+
+.filter-option input[type="radio"]:checked,
+.filter-option input[type="checkbox"]:checked {
+    background-color: #3b82f6; /* Blue-500 */
+    border-color: #3b82f6;
+}
+
+.filter-option input[type="checkbox"]:checked::after {
+    content: '✔';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 0.75rem;
+    line-height: 1;
+}
+
+.filter-option input[type="radio"]:checked::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background-color: white;
+}
+
+.filter-option label {
+    cursor: pointer;
+    vertical-align: middle;
+}
+.job-logo img{
+    width: 100px;
+    height: 100px;
+}
+.filter-section{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.search-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+}
+.job-card{
+    margin-bottom: 20px;
+}
