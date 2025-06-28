@@ -1,5 +1,5 @@
 import JobModel from '../models/jobs.model.js';
-
+import ApplicantModel from '../models/applicants.model.js';
 class JobsController {
   getJobs(req, res, next) {
     var jobs = JobModel.getAll();
@@ -25,9 +25,10 @@ class JobsController {
         number_of_openings,
         job_posted,
         applicants}=req.body;
-   // console.log(req.file.filename);
-    const imageUrl='images/'+req.file.filename; 
-    JobModel.add( job_category,
+   
+    const logo='images/'+req.file.filename; 
+    JobModel.add( 
+        job_category,
         job_designation,
         job_location,
         company_name,
@@ -36,41 +37,68 @@ class JobsController {
         skills_required,
         number_of_openings,
         job_posted,
-        applicants,imageUrl);
+        applicants,logo);
     var jobs = JobModel.getAll();
-    console.log(req.session.user)
-    res.render('list-all-jobs', { products,user:req.session.user });
+    res.render('list-all-jobs', { jobs,user:req.session.user });
+  }
+  getJobView(req,res,next){
+    const id=req.params.id;
+    const jobFound=JobModel.getById(id);
+    //console.log(req.session.user)
+    if(jobFound){
+      res.render('job-details',{data:jobFound,errorMessage:null,user:req.session.user})
+    }else{
+      res.status(401).send('Job not found')
+    }
   }
 
-//   getUpdatedProductView(req,res,next){
-//     //1. if product existthen return value
-//     const id=req.params.id;
-//     //console.log(id)
-//     const productFound=ProductModel.getById(id)
-//     if(productFound){
-//       res.render('update-product',{product:productFound,errorMessage:null,user:req.session.user})
-//     }
-//     //2.else return error
-//     else{
-//       res.status(401).send('Product not found')
-//     }
-//   }
-//   postUpdateProduct(req,res,next){
-//      ProductModel.update(req.body);
-//     var products = ProductModel.getAll();
-//     res.render('index', { products,user:req.session.user });
+  getUpdatedJob(req,res,next){
+    //1. if product existthen return value
+    const id=req.params.id;
+    const jobFound=JobModel.getById(id)
+    if(jobFound){
+      res.render('update-job',{job:jobFound,errorMessage:null,user:req.session.user})
+    }
+    //2.else return error
+    else{
+      res.status(401).send('Job not found')
+    }
+  }
+  postUpdateJob(req,res,next){
+      const id=req.params.id;
+    JobModel.update(req.body,id);
+   var jobs = JobModel.getAll();
+    const jobFound=JobModel.getById(id);
+    res.render('job-details',{data:jobFound,errorMessage:null,user:req.session.user})
   
-//   }
-//   deleteProduct(req,res){
-//     let id=req.params.id;
-//     const productFound=ProductModel.getById(id)
-//     if(!productFound){
-//       return  res.status(401).send('Product not found')
-//     }
-//     ProductModel.delete(id);
-//      var products = ProductModel.getAll();
-//        res.render('index', { products,user:req.session.user });
-//   }
+  }
+
+  deleteJob(req,res){
+    let id=req.params.id;
+    const jobFound=JobModel.getById(id)
+    if(!jobFound){
+      return  res.status(401).send('Job not found')
+    }
+    JobModel.delete(id);
+     var jobs = JobModel.getAll();
+       res.render('list-all-jobs', { jobs,user:req.session.user });
+  }
+  //apply/:id
+
+ applyByJobSeeker(req,res){
+     let id=req.params.id;
+    const jobFound=JobModel.getById(id);
+    if(!jobFound){
+      return  res.status(401).send('Job not found')
+    }
+    JobModel.applyBy(id);
+    const {name,email,contact}=req.body;
+     const resumePath='documents/'+req.file.filename; 
+     ApplicantModel.add(name,email,contact,resumePath);
+    var jobs = JobModel.getAll();
+    res.render('list-all-jobs', { jobs });
+  }
+
 }
 
 export default JobsController;

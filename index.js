@@ -4,7 +4,7 @@ import ejsLayouts from 'express-ejs-layouts';
 import session from 'express-session';
 import {auth} from './src/middleware/auth.middleware.js';
 import UserController from './src/controllers/user.controller.js';
-import { uploadFile } from './src/middleware/file-upload.middleware.js';
+import { uploadFile,uploadDocument} from './src/middleware/file-upload.middleware.js';
 import JobsController from './src/controllers/jobs.controller.js';
 import cookieParser from 'cookie-parser';
 import { setLastVisit } from './src/middleware/lastVisit.middleware.js';
@@ -48,27 +48,23 @@ app.post('/login',userController.postLogin);
 
 app.get('/logout',userController.logout);
 //Jobs Controller
-
 app.get('/jobs',jobsController.getJobs);
 app.get('/postjob',jobsController.getAddJob);
-// app.get('/jobs/:id',userController.getLogin);
-// app.put('/jobs/:id',userController.getLogin);
-// app.delete('/jobs/:id',userController.getLogin);
+app.post('/job', auth, uploadFile.single('logo'),
+jobsController.postAddJob);
+//update
+app.get('/job/:id',jobsController.getJobView);
+app.get('/job/update/:id',jobsController.getUpdatedJob);
+app.post('/job/update/:id',jobsController.postUpdateJob);
+//delete
+app.get('/job/delete/:id',jobsController.deleteJob);
+//apply/:id
+app.post('/apply/:id',uploadDocument.single('resume'),jobsController.applyByJobSeeker)
 //Error page or any other routes
 
-app.post('/job', auth, uploadFile.single('logo'),
- jobsController.postAddJob);
-app.use((req,res)=>{
-    res.render('404');
-});
-
-
-
-//app.set('views',__dirname,'src','views');
-
-//Job Controller and routes
-app.get('/jobs',jobsController.getJobs)
-
+// app.use((req,res)=>{
+//     res.render('404');
+// });
 
 const PORT=3200;
 

@@ -21,10 +21,10 @@ export default class UserController{
             errorMessage:"Invalid Credentials"
         })
        }
-       console.log(req.session.userName)
-       req.session.user=email;
+     //  console.log(req.session.userName)
+       req.session.user=user;
            var jobs =JobModel.getAll();
-          return  res.render('list-all-jobs', { jobs,user:req.session.user });
+          return  res.render('list-all-jobs', { jobs,user:req.session.user});
      
     }
     logout(req,res){

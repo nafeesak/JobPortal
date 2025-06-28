@@ -1,3 +1,5 @@
+import { application } from "express";
+
 export default class JobModel{
    constructor(
         id,
@@ -31,10 +33,20 @@ export default class JobModel{
   static getAll() {
     return jobs;
   }
-  static add(){
+  static add(job_category,
+        job_designation,
+        job_location,
+        company_name,
+        salary,
+        apply_by,
+        skills_required,
+        number_of_openings,
+        job_posted,
+        applicants,
+    logo){
      let newJob = new JobModel(
       jobs.length + 1,
-     job_category,
+        job_category,
         job_designation,
         job_location,
         company_name,
@@ -48,6 +60,22 @@ export default class JobModel{
     );
     jobs.push(newJob);
   }
+  static getById(id){
+    return jobs.find((p)=>p.id==id)
+  }
+  static update(jobObj,id){
+   // console.log(jobObj)
+     const index=jobs.findIndex((p)=>p.id==id);
+       jobs[index] = { ...jobs[index], ...jobObj };
+  }
+static delete(id){
+  const index=jobs.findIndex((p)=>p.id==id);
+  jobs.splice(index,1)
+}
+static applyBy(id){
+  const index=jobs.findIndex((p)=>p.id==id);
+  jobs[index]={ ...jobs[index],  applicants: jobs[index].applicants + 1 };
+}
 }
 let jobs=[
     new JobModel(
@@ -61,7 +89,7 @@ let jobs=[
             ['JavaScript', 'Node.js', 'React', 'MongoDB'],
             5,
             new Date('2025-06-01'),
-            120,
+           [1,2],
             'https://searchengineland.com/wp-content/seloads/2015/12/google-amp-fast-speed-travel-ss-1920.jpg',
         ),
         new JobModel(
@@ -75,7 +103,7 @@ let jobs=[
             ['SEO', 'SEM', 'Content Marketing', 'Social Media'],
             2,
             new Date('2025-06-10'),
-            75,
+            [1],
             'https://searchengineland.com/wp-content/seloads/2015/12/google-amp-fast-speed-travel-ss-1920.jpg',
         ),
         
@@ -90,7 +118,7 @@ let jobs=[
             ['Financial Modeling', 'Excel', 'Data Analysis'],
             3,
             new Date('2025-05-25'),
-            90,
+            [1,2,3],
              'https://searchengineland.com/wp-content/seloads/2015/12/google-amp-fast-speed-travel-ss-1920.jpg'
         
         ),
@@ -105,7 +133,7 @@ let jobs=[
             ['Figma', 'Adobe XD', 'User Research', 'Prototyping'],
             1,
             new Date('2025-06-05'),
-            50 ,
+            [1,2],
             'https://searchengineland.com/wp-content/seloads/2015/12/google-amp-fast-speed-travel-ss-1920.jpg'
         ),
         new JobModel(
@@ -119,7 +147,8 @@ let jobs=[
             ['Patient Care', 'Medication Administration', 'Emergency Response'],
             10,
             new Date('2025-06-15'),
-            150, 'https://searchengineland.com/wp-content/seloads/2015/12/google-amp-fast-speed-travel-ss-1920.jpg'
+            [1,2],
+            'https://searchengineland.com/wp-content/seloads/2015/12/google-amp-fast-speed-travel-ss-1920.jpg'
         ),
 
 ]
