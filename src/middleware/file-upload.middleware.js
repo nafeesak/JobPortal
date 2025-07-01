@@ -18,7 +18,7 @@ const storageConfigPdf = multer.diskStorage({
     // Set the destination directory for uploaded files
     // You should create this directory if it doesn't exist (e.g., 'public/documents')
     destination: (req, file, cb) => {
-        cb(null, 'public/documents'); 
+        cb(null, 'public/uploads'); 
     },
     // Define the filename for the uploaded file
     filename: (req, file, cb) => {
@@ -34,7 +34,7 @@ export const uploadDocument = multer({
     // Optional: Add a fileFilter to allow only specific document types
     fileFilter: (req, file, cb) => {
         // Allowed file extensions
-        const allowedExtensions = ['.pdf', '.doc', '.docx'];
+        const allowedExtensions = ['.pdf'];
         // Get the file's extension
         const fileExtension = path.extname(file.originalname).toLowerCase();
 
@@ -44,7 +44,7 @@ export const uploadDocument = multer({
             cb(null, true);
         } else {
             // Reject the file and provide an error message
-            cb(new Error('Only PDF and Word documents are allowed!'), false);
+            cb(new Error('Only PDF documents are allowed!'), false);
         }
     },
     // Optional: Set file size limits (e.g., 5MB)

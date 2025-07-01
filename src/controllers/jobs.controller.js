@@ -93,10 +93,15 @@ class JobsController {
     }
     JobModel.applyBy(id);
     const {name,email,contact}=req.body;
-     const resumePath='documents/'+req.file.filename; 
+    const resumePath=req.file.filename; 
+     console.log(resumePath)
      ApplicantModel.add(name,email,contact,resumePath);
     var jobs = JobModel.getAll();
     res.render('list-all-jobs', { jobs });
+  }
+  getJobApplicants(req,res){
+    var applicants = ApplicantModel.getAllApplicants();
+   return res.render('all-applicants', { allApplicants:applicants,user:req.session.user});
   }
 
 }

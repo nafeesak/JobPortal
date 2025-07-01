@@ -1,5 +1,7 @@
+
 <div class="container" style="max-width: 900px;">
   <div class="card shadow-sm rounded-4 border-0">
+    <% if (locals.user) { %>  
     <!-- Enhanced Header -->
     <div class="card-header bg-white text-dark d-flex justify-content-between align-items-center py-3">
       <div>
@@ -42,11 +44,29 @@
         </tbody>
       </table>
     </div>
+    <% } else { %>
+    <div class="notRecuriter">
+      <h1>Oops</h1>
+      <p>only recuriter is allowed to access this page,login as recuriter to contine</p>
+    </div>
+    <% } %>
   </div>
 </div>
 
 <style>
+  /* Not Authorized */
+  .notRecuriter{
+    background-color: #333;
+    
+  }
+  .notRecuriter h1{
+    color: #ffffff;
+  }
+  .notRecuriter p{
+    color:#ed1111;
+  }
   /* Card Styling */
+  
   .card {
     border-radius: 15px;
     overflow: hidden;

@@ -10,5 +10,16 @@ export default class ApplicantModel{
         const newApplicant=new ApplicantModel(applicants.length+1,name,email,contact,resumePath);
         applicants.push(newApplicant);
     }
+    static getAllApplicants(){
+        return applicants;
+    }
 }
-let applicants=[]
+let applicants=[
+    new ApplicantModel(
+        1,
+        'Anjum',
+        'anjum45@gmail.com',
+        7864468900,
+        'resume-sample.pdf'
+    )
+]

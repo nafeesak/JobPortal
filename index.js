@@ -59,7 +59,9 @@ app.post('/job/update/:id',jobsController.postUpdateJob);
 //delete
 app.get('/job/delete/:id',jobsController.deleteJob);
 //apply/:id
-app.post('/apply/:id',uploadDocument.single('resume'),jobsController.applyByJobSeeker)
+app.post('/apply/:id',uploadDocument.single('resume'),jobsController.applyByJobSeeker);
+//applicants 
+app.get('/job/applicants/:id',jobsController.getJobApplicants);
 //Error page or any other routes
 
 // app.use((req,res)=>{
