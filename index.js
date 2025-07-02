@@ -31,6 +31,9 @@ app.set(
   'views',
   path.join(path.resolve(), 'src', 'views')
 );
+//Search button as query parameter
+app.get('/',jobsController.searchText)
+
 //landing page
 app.get('/',(req,res)=>{
     res.render('landing-page')

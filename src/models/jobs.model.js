@@ -76,6 +76,15 @@ static applyBy(id){
   const index=jobs.findIndex((p)=>p.id==id);
   jobs[index]={ ...jobs[index],  applicants: jobs[index].applicants + 1 };
 }
+static searchTextValue(jobTitleQuery,locationQuery){
+ 
+
+    // Delegate the filtering logic to the jobModel
+    const searchResults = jobModel.filterJobs(jobTitleQuery, locationQuery);
+
+    // Send the filtered results back as a JSON response
+  return searchResults;
+}
 }
 let jobs=[
     new JobModel(

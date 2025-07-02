@@ -1,5 +1,6 @@
 import JobModel from '../models/jobs.model.js';
 import ApplicantModel from '../models/applicants.model.js';
+import sendMail from '../middleware/send-mail.middleware.js';
 class JobsController {
   getJobs(req, res, next) {
     var jobs = JobModel.getAll();
@@ -94,7 +95,8 @@ class JobsController {
     JobModel.applyBy(id);
     const {name,email,contact}=req.body;
     const resumePath=req.file.filename; 
-     console.log(resumePath)
+    // console.log(resumePath)
+     sendMail(email);
      ApplicantModel.add(name,email,contact,resumePath);
     var jobs = JobModel.getAll();
     res.render('list-all-jobs', { jobs });
@@ -102,6 +104,11 @@ class JobsController {
   getJobApplicants(req,res){
     var applicants = ApplicantModel.getAllApplicants();
    return res.render('all-applicants', { allApplicants:applicants,user:req.session.user});
+  }
+  searchText(){
+      const jobTitleQuery = req.query.title || '';
+    const locationQuery = req.query.location || '';
+    JobModel.searchTextValue(jobTitleQuery,locationQuery);
   }
 
 }
